@@ -1,0 +1,3 @@
+[submodule "libdogecoin-sys/vendor/libdogecoin"]
+	path = libdogecoin-sys/vendor/libdogecoin
+	url = https://github.com/dogecoinfoundation/libdogecoin.git

@@ -1,0 +1,6 @@
+[workspace]
+resolver = "2"
+members = [
+    "libdogecoin-sys",
+    "dogecoin-rs",
+]

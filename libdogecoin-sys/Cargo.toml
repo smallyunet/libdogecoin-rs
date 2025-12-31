@@ -1,0 +1,12 @@
+[package]
+name = "libdogecoin-sys"
+version = "0.1.0"
+edition = "2021"
+links = "dogecoin"
+
+[dependencies]
+libc = "0.2"
+
+[build-dependencies]
+cc = "1.0"
+bindgen = "0.69"

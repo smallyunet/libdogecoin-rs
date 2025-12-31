@@ -1,26 +1,38 @@
-# dogecoin-rs
+# libdogecoin-rs
 
-A safe, idiomatic Rust wrapper for the official [libdogecoin](https://github.com/dogecoinfoundation/libdogecoin) C library.
+A safe, ergonomic Rust wrapper for [libdogecoin](https://github.com/dogecoin/libdogecoin).
 
-## Project Structure
+## Project Goal
+To provide a clean, safe Rust API for Dogecoin operations, hiding the complexity of unsafe C FFI calls and memory management.
 
-This project is a Cargo Workspace containing:
-
--   `libdogecoin-sys`: Low-level unsafe bindings generated from `libdogecoin` (statically linked).
--   `dogecoin-rs`: High-level safe wrapper providing an ergonomic Rust API.
-
-## Roadmap
-
-See [ROADMAP.md](ROADMAP.md) for the development plan.
-
-## Build
-
-Ensure you have a C compiler installed (e.g., `clang`, `gcc`) and `bindgen` dependencies if necessary.
-
-```bash
-cargo build
-```
+## Features
+- **Safe Wrapper**: Encapsulates `libdogecoin` C functions in safe Rust structs.
+- **Easy Wallet Creation**: Create wallets without manual memory management.
+- **Statically Linked**: `libdogecoin` is built and linked statically.
 
 ## Usage
 
-(Coming soon in Phase 2)
+Add this to your `Cargo.toml`:
+
+```toml
+[dependencies]
+libdogecoin-rs = { path = "libdogecoin-rs" }
+```
+
+### Example: Create a Wallet
+
+```rust
+use libdogecoin_rs::DogeWallet;
+
+fn main() {
+    // Create a new mainnet wallet
+    let wallet = DogeWallet::new(false).expect("Failed to create wallet");
+    
+    println!("Address: {}", wallet.address());
+    println!("Private Key: {}", wallet.private_key());
+}
+```
+
+## Architecture
+- **libdogecoin-sys**: Low-level FFI bindings and build script for `libdogecoin`.
+- **dogecoin-rs**: High-level safe Rust API.

@@ -13,6 +13,9 @@ fn main() {
         .include(secp_src.join("include"))
         .include(secp_src.join("src"))
         .file(secp_src.join("src/secp256k1.c"))
+        .file(secp_src.join("src/precomputed_ecmult.c"))
+        .file(secp_src.join("src/precomputed_ecmult_gen.c"))
+
         .define("SECP256K1_BUILD", None)
         .define("ENABLE_MODULE_RECOVERY", None)
         .define("USE_NUM_NONE", "1")

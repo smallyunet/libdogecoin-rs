@@ -2,5 +2,5 @@
 resolver = "2"
 members = [
     "libdogecoin-sys",
-    "dogecoin-rs",
+    "libdogecoin-rs",
 ]

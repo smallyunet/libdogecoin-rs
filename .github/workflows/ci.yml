@@ -15,7 +15,6 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest]
-        rust: [stable]
 
     steps:
     - uses: actions/checkout@v4
@@ -23,7 +22,7 @@ jobs:
         submodules: recursive
 
     - name: Install Rust
-      uses: dtolnay/rust-action@stable
+      uses: dtolnay/rust-toolchain@stable
 
     - name: Build
       run: cargo build --verbose
@@ -39,7 +38,7 @@ jobs:
         submodules: recursive
 
     - name: Install Rust
-      uses: dtolnay/rust-action@stable
+      uses: dtolnay/rust-toolchain@stable
       with:
         components: clippy, rustfmt
 

@@ -7,15 +7,13 @@ pub struct DogeWallet {
 
 impl DogeWallet {
     /// Create a new wallet.
-    /// 
+    ///
     /// # Arguments
     /// * `is_testnet` - Set to true for testnet, false for mainnet.
     pub fn new(is_testnet: bool) -> Option<Self> {
         static INIT: std::sync::Once = std::sync::Once::new();
-        INIT.call_once(|| {
-            unsafe {
-                sys::dogecoin_ecc_start();
-            }
+        INIT.call_once(|| unsafe {
+            sys::dogecoin_ecc_start();
         });
 
         // Defined in libdogecoin.h
@@ -65,7 +63,7 @@ mod tests {
         let wallet = DogeWallet::new(false).unwrap();
         println!("Address: {}", wallet.address());
         println!("PrivKey: {}", wallet.private_key());
-        
+
         // Mainnet addresses start with 'D'
         assert!(wallet.address().starts_with("D"));
     }
@@ -75,7 +73,7 @@ mod tests {
         let wallet = DogeWallet::new(true).unwrap();
         println!("Address: {}", wallet.address());
         println!("PrivKey: {}", wallet.private_key());
-        
+
         // Testnet addresses start with 'n'
         assert!(wallet.address().starts_with("n"));
     }

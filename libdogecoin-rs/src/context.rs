@@ -5,10 +5,8 @@ use crate::sys;
 /// Ensure ECC context is initialized (thread-safe).
 pub(crate) fn ensure_ecc_started() {
     static INIT: std::sync::Once = std::sync::Once::new();
-    INIT.call_once(|| {
-        unsafe {
-            sys::dogecoin_ecc_start();
-        }
+    INIT.call_once(|| unsafe {
+        sys::dogecoin_ecc_start();
     });
 }
 

@@ -51,7 +51,10 @@ impl QrCode {
         }
 
         // Find the null terminator
-        let len = out_string.iter().position(|&x| x == 0).unwrap_or(out_string.len());
+        let len = out_string
+            .iter()
+            .position(|&x| x == 0)
+            .unwrap_or(out_string.len());
         let qr_str = String::from_utf8_lossy(&out_string[..len]).into_owned();
         Some(qr_str)
     }
@@ -143,10 +146,7 @@ impl QrCode {
         let addr_cstr = CString::new(address).ok()?;
 
         let size = unsafe {
-            sys::qrgen_p2pkh_to_qrbits(
-                addr_cstr.as_ptr() as *const i8,
-                bits.as_mut_ptr(),
-            )
+            sys::qrgen_p2pkh_to_qrbits(addr_cstr.as_ptr() as *const i8, bits.as_mut_ptr())
         };
 
         if size <= 0 {
@@ -180,5 +180,3 @@ mod tests {
         }
     }
 }
-
-

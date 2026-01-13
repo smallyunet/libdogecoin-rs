@@ -41,9 +41,7 @@ impl DogeTransaction {
     /// `true` if the UTXO was added successfully.
     pub fn add_utxo(&mut self, txid: &str, vout: i32) -> bool {
         let txid_cstr = CString::new(txid).expect("Invalid txid string");
-        let result = unsafe {
-            sys::add_utxo(self.tx_index, txid_cstr.as_ptr() as *mut i8, vout)
-        };
+        let result = unsafe { sys::add_utxo(self.tx_index, txid_cstr.as_ptr() as *mut i8, vout) };
         result == 1
     }
 
@@ -85,13 +83,12 @@ impl DogeTransaction {
     ) -> Option<String> {
         let dest_cstr = CString::new(destination).expect("Invalid destination");
         let fee_cstr = CString::new(fee).expect("Invalid fee");
-        
+
         // For verification amount, we use "0" as placeholder
         let amount_cstr = CString::new("0").unwrap();
-        
-        let change_cstr = change_address
-            .map(|s| CString::new(s).expect("Invalid change address"));
-        
+
+        let change_cstr = change_address.map(|s| CString::new(s).expect("Invalid change address"));
+
         let change_ptr = match &change_cstr {
             Some(s) => s.as_ptr() as *mut i8,
             None => std::ptr::null_mut(),

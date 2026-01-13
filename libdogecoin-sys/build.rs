@@ -7,7 +7,7 @@ fn main() {
 
     // --- Build secp256k1 ---
     let secp_src = vendor_dir.join("src/secp256k1");
-    
+
     let mut secp_build = cc::Build::new();
     secp_build
         .include(secp_src.join("include"))
@@ -31,7 +31,7 @@ fn main() {
 
     // --- Build libdogecoin ---
     let mut build = cc::Build::new();
-    
+
     let doge_src = vendor_dir.join("src");
     let doge_include = vendor_dir.join("include");
 
@@ -84,8 +84,7 @@ fn main() {
         .define("HAVE_STDLIB_H", None) // minimal config
         .define("HAVE_STRING_H", None)
         .flag("-Wno-unused-parameter")
-        .flag("-Wno-unused-variable")
-        ;
+        .flag("-Wno-unused-variable");
 
     build.compile("dogecoin");
 
@@ -93,7 +92,12 @@ fn main() {
     println!("cargo:rerun-if-changed=vendor/libdogecoin/include/dogecoin/libdogecoin.h");
 
     let bindings = bindgen::Builder::default()
-        .header(vendor_dir.join("include/dogecoin/libdogecoin.h").to_str().unwrap())
+        .header(
+            vendor_dir
+                .join("include/dogecoin/libdogecoin.h")
+                .to_str()
+                .unwrap(),
+        )
         .clang_arg(format!("-I{}", vendor_dir.join("include").display()))
         // We also need secp include path for binding generation if headers refer to it
         .clang_arg(format!("-I{}", secp_src.join("include").display()))

@@ -1,5 +1,9 @@
 # libdogecoin-rs
 
+[![Crates.io](https://img.shields.io/crates/v/libdogecoin-rs.svg)](https://crates.io/crates/libdogecoin-rs)
+[![Documentation](https://docs.rs/libdogecoin-rs/badge.svg)](https://docs.rs/libdogecoin-rs)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Safe Rust bindings for [libdogecoin](https://github.com/dogecoinfoundation/libdogecoin).
 
 ## Features

@@ -16,7 +16,22 @@
 - [x] Mnemonic generation (BIP39).
 - [x] QR Code generation for addresses.
 
-## Phase 4: Polish & Publish
+## Phase 4: Polish & Publish ✅
 - [x] Comprehensive documentation.
 - [x] CI/CD pipeline.
-- [ ] Publish to crates.io.
+- [x] Publish to crates.io.
+
+## Phase 5: Network & RPC
+- [ ] Simple RPC client for Dogecoin nodes.
+- [ ] UTXO balance queries.
+- [ ] Transaction broadcasting.
+
+## Phase 6: Security Enhancements
+- [ ] Address validation utilities.
+- [ ] Message signing and verification.
+- [ ] Zeroize sensitive data in memory.
+
+## Phase 7: Ecosystem Integration
+- [ ] WASM compilation support (browser).
+- [ ] C FFI exports for other languages.
+- [ ] More examples and tutorials.

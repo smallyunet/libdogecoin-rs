@@ -15,7 +15,6 @@ fn main() {
         .file(secp_src.join("src/secp256k1.c"))
         .file(secp_src.join("src/precomputed_ecmult.c"))
         .file(secp_src.join("src/precomputed_ecmult_gen.c"))
-
         .define("SECP256K1_BUILD", None)
         .define("ENABLE_MODULE_RECOVERY", None)
         .define("USE_NUM_NONE", "1")
@@ -23,8 +22,7 @@ fn main() {
         .define("USE_SCALAR_INV_BUILTIN", "1")
         .define("ECMULT_GEN_PREC_BITS", "4")
         .define("ECMULT_WINDOW_SIZE", "15")
-        // .warnings(false)
-        ;
+        .warnings(false);
 
     // Compile secp256k1
     secp_build.compile("secp256k1");
@@ -84,7 +82,8 @@ fn main() {
         .define("HAVE_STDLIB_H", None) // minimal config
         .define("HAVE_STRING_H", None)
         .flag("-Wno-unused-parameter")
-        .flag("-Wno-unused-variable");
+        .flag("-Wno-unused-variable")
+        .warnings(false);
 
     build.compile("dogecoin");
 

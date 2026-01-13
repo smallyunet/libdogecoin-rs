@@ -40,10 +40,7 @@ impl QrCode {
         let addr_cstr = CString::new(address).ok()?;
 
         let result = unsafe {
-            sys::qrgen_p2pkh_to_qr_string(
-                addr_cstr.as_ptr() as *const i8,
-                out_string.as_mut_ptr() as *mut i8,
-            )
+            sys::qrgen_p2pkh_to_qr_string(addr_cstr.as_ptr(), out_string.as_mut_ptr() as *mut i8)
         };
 
         if result <= 0 {
@@ -92,8 +89,8 @@ impl QrCode {
 
         let result = unsafe {
             sys::qrgen_string_to_qr_pngfile(
-                filename_cstr.as_ptr() as *const i8,
-                addr_cstr.as_ptr() as *const i8,
+                filename_cstr.as_ptr(),
+                addr_cstr.as_ptr(),
                 size_multiplier,
             )
         };
@@ -122,8 +119,8 @@ impl QrCode {
 
         let result = unsafe {
             sys::qrgen_string_to_qr_jpgfile(
-                filename_cstr.as_ptr() as *const i8,
-                addr_cstr.as_ptr() as *const i8,
+                filename_cstr.as_ptr(),
+                addr_cstr.as_ptr(),
                 size_multiplier,
             )
         };
@@ -145,9 +142,7 @@ impl QrCode {
         let mut bits = vec![0u8; MAX_QR_SIZE];
         let addr_cstr = CString::new(address).ok()?;
 
-        let size = unsafe {
-            sys::qrgen_p2pkh_to_qrbits(addr_cstr.as_ptr() as *const i8, bits.as_mut_ptr())
-        };
+        let size = unsafe { sys::qrgen_p2pkh_to_qrbits(addr_cstr.as_ptr(), bits.as_mut_ptr()) };
 
         if size <= 0 {
             return None;

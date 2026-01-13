@@ -2,6 +2,11 @@
 name = "libdogecoin-sys"
 version = "0.1.0"
 edition = "2021"
+description = "Raw FFI bindings to libdogecoin - a C library for Dogecoin"
+license = "MIT"
+repository = "https://github.com/libdogecoin/libdogecoin-rs"
+keywords = ["dogecoin", "cryptocurrency", "ffi", "bindings"]
+categories = ["cryptography::cryptocurrencies", "external-ffi-bindings"]
 links = "dogecoin"
 
 [dependencies]

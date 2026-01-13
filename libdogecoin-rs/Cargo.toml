@@ -2,6 +2,11 @@
 name = "libdogecoin-rs"
 version = "0.1.0"
 edition = "2021"
+description = "Safe Rust bindings for libdogecoin - wallet, transaction, HD wallet, and mnemonic support"
+license = "MIT"
+repository = "https://github.com/libdogecoin/libdogecoin-rs"
+keywords = ["dogecoin", "cryptocurrency", "wallet", "blockchain"]
+categories = ["cryptography::cryptocurrencies"]
 
 [dependencies]
 libdogecoin-sys = { path = "../libdogecoin-sys" }

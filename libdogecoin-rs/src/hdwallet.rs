@@ -106,7 +106,7 @@ impl HdWallet {
 
         let result = unsafe {
             sys::getDerivedHDAddress(
-                master_cstr.as_ptr() as *const i8,
+                master_cstr.as_ptr(),
                 account,
                 is_change as u8,
                 index,
@@ -139,8 +139,8 @@ impl HdWallet {
 
         let result = unsafe {
             sys::getDerivedHDAddressByPath(
-                master_cstr.as_ptr() as *const i8,
-                path_cstr.as_ptr() as *const i8,
+                master_cstr.as_ptr(),
+                path_cstr.as_ptr(),
                 out_address.as_mut_ptr() as *mut i8,
                 false as u8,
             )
@@ -162,10 +162,7 @@ impl HdWallet {
         let master_cstr = CString::new(self.master_key.as_str()).ok()?;
 
         let result = unsafe {
-            sys::generateDerivedHDPubkey(
-                master_cstr.as_ptr() as *const i8,
-                p2pkh_pubkey.as_mut_ptr() as *mut i8,
-            )
+            sys::generateDerivedHDPubkey(master_cstr.as_ptr(), p2pkh_pubkey.as_mut_ptr() as *mut i8)
         };
 
         if result != 1 {

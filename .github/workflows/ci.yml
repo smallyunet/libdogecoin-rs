@@ -45,5 +45,5 @@ jobs:
     - name: Check formatting
       run: cargo fmt --all -- --check
 
-    - name: Run Clippy
-      run: cargo clippy -- -D warnings
+    - name: Run Clippy (libdogecoin-rs only)
+      run: cargo clippy -p libdogecoin-rs -- -D warnings

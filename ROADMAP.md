@@ -22,14 +22,14 @@
 - [x] Publish to crates.io.
 
 ## Phase 5: Network & RPC
-- [ ] Simple RPC client for Dogecoin nodes.
-- [ ] UTXO balance queries.
-- [ ] Transaction broadcasting.
+- [x] Simple RPC client for Dogecoin nodes.
+- [x] UTXO balance queries.
+- [x] Transaction broadcasting.
 
 ## Phase 6: Security Enhancements
-- [ ] Address validation utilities.
-- [ ] Message signing and verification.
-- [ ] Zeroize sensitive data in memory.
+- [x] Address validation utilities.
+- [x] Message signing and verification.
+- [x] Zeroize sensitive data in memory.
 
 ## Phase 7: Ecosystem Integration
 - [ ] WASM compilation support (browser).

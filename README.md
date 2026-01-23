@@ -13,6 +13,8 @@ Safe Rust bindings for [libdogecoin](https://github.com/dogecoinfoundation/libdo
 - **HD Wallets** - BIP32/BIP44 hierarchical deterministic wallets
 - **Mnemonic Phrases** - BIP39 seed phrase generation and derivation
 - **QR Codes** - Generate QR codes for addresses (PNG/JPEG)
+- **RPC Client** - Simple JSON-RPC client (listunspent, balance, sendrawtransaction)
+- **Security Utilities** - Address validation, message sign/verify, secret zeroization
 
 ## Installation
 

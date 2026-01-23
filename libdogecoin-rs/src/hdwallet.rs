@@ -4,6 +4,7 @@
 
 use crate::sys;
 use std::ffi::{CStr, CString};
+use zeroize::Zeroizing;
 
 /// HD Wallet key length constant from libdogecoin.
 /// Note: libdogecoin docs say function expects 128 but returns 111.
@@ -32,7 +33,7 @@ const KEYPATHMAXLEN: usize = 256;
 /// println!("First address: {}", addr);
 /// ```
 pub struct HdWallet {
-    master_key: String,
+    master_key: Zeroizing<String>,
     is_testnet: bool,
 }
 
@@ -62,7 +63,7 @@ impl HdWallet {
         let master_key_cstr = unsafe { CStr::from_ptr(hd_privkey.as_ptr() as *const i8) };
 
         Some(HdWallet {
-            master_key: master_key_cstr.to_string_lossy().into_owned(),
+            master_key: Zeroizing::new(master_key_cstr.to_string_lossy().into_owned()),
             is_testnet,
         })
     }
@@ -74,14 +75,14 @@ impl HdWallet {
     /// * `is_testnet` - Whether this is a testnet key.
     pub fn from_master_key(master_key: &str, is_testnet: bool) -> Self {
         HdWallet {
-            master_key: master_key.to_string(),
+            master_key: Zeroizing::new(master_key.to_string()),
             is_testnet,
         }
     }
 
     /// Get the master private key.
     pub fn master_key(&self) -> &str {
-        &self.master_key
+        self.master_key.as_str()
     }
 
     /// Check if this is a testnet wallet.

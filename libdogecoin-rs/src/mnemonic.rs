@@ -5,6 +5,7 @@
 
 use crate::sys;
 use std::ffi::{CStr, CString};
+use zeroize::Zeroizing;
 
 /// Maximum mnemonic size from libdogecoin.
 const MAX_MNEMONIC_SIZE: usize = 1024;
@@ -34,7 +35,7 @@ const P2PKHLEN: usize = 64;
 /// println!("Address: {}", addr);
 /// ```
 pub struct Mnemonic {
-    phrase: String,
+    phrase: Zeroizing<String>,
 }
 
 impl Mnemonic {
@@ -64,7 +65,7 @@ impl Mnemonic {
 
         let phrase_cstr = unsafe { CStr::from_ptr(mnemonic.as_ptr() as *const i8) };
         Some(Mnemonic {
-            phrase: phrase_cstr.to_string_lossy().into_owned(),
+            phrase: Zeroizing::new(phrase_cstr.to_string_lossy().into_owned()),
         })
     }
 
@@ -74,13 +75,13 @@ impl Mnemonic {
     /// * `phrase` - The mnemonic phrase (space-separated words).
     pub fn from_phrase(phrase: &str) -> Self {
         Mnemonic {
-            phrase: phrase.to_string(),
+            phrase: Zeroizing::new(phrase.to_string()),
         }
     }
 
     /// Get the mnemonic phrase.
     pub fn phrase(&self) -> &str {
-        &self.phrase
+        self.phrase.as_str()
     }
 
     /// Derive a seed from the mnemonic phrase.

@@ -1,7 +1,8 @@
 use crate::sys;
+use zeroize::Zeroizing;
 
 pub struct DogeWallet {
-    private_key: String,
+    private_key: Zeroizing<String>,
     address: String,
 }
 
@@ -11,10 +12,7 @@ impl DogeWallet {
     /// # Arguments
     /// * `is_testnet` - Set to true for testnet, false for mainnet.
     pub fn new(is_testnet: bool) -> Option<Self> {
-        static INIT: std::sync::Once = std::sync::Once::new();
-        INIT.call_once(|| unsafe {
-            sys::dogecoin_ecc_start();
-        });
+        crate::context::ensure_ecc_started();
 
         // Defined in libdogecoin.h
         const PRIVKEYWIFLEN: usize = 53;
@@ -39,7 +37,7 @@ impl DogeWallet {
             let address_cstr = std::ffi::CStr::from_ptr(p2pkh_pubkey.as_ptr() as *const i8);
 
             Some(DogeWallet {
-                private_key: priv_key_cstr.to_string_lossy().into_owned(),
+                private_key: Zeroizing::new(priv_key_cstr.to_string_lossy().into_owned()),
                 address: address_cstr.to_string_lossy().into_owned(),
             })
         }
@@ -50,7 +48,7 @@ impl DogeWallet {
     }
 
     pub fn private_key(&self) -> &str {
-        &self.private_key
+        self.private_key.as_str()
     }
 }
 

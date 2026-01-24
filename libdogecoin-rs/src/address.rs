@@ -69,12 +69,18 @@ mod tests {
     fn test_address_validation_mainnet_wallet() {
         let wallet = DogeWallet::new(false).unwrap();
         assert!(AddressUtils::is_valid_p2pkh(wallet.address()));
-        assert_eq!(AddressUtils::network(wallet.address()), AddressNetwork::Mainnet);
+        assert_eq!(
+            AddressUtils::network(wallet.address()),
+            AddressNetwork::Mainnet
+        );
     }
 
     #[test]
     fn test_address_validation_rejects_garbage() {
         assert!(!AddressUtils::is_valid_p2pkh("not-an-address"));
-        assert_eq!(AddressUtils::network("not-an-address"), AddressNetwork::Unknown);
+        assert_eq!(
+            AddressUtils::network("not-an-address"),
+            AddressNetwork::Unknown
+        );
     }
 }

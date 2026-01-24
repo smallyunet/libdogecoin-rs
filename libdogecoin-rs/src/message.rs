@@ -17,12 +17,15 @@ impl Message {
         let c_priv = CString::new(privkey_wif).ok()?;
         let c_msg = CString::new(message).ok()?;
 
-        let sig_ptr = unsafe { sys::sign_message(c_priv.as_ptr() as *mut i8, c_msg.as_ptr() as *mut i8) };
+        let sig_ptr =
+            unsafe { sys::sign_message(c_priv.as_ptr() as *mut i8, c_msg.as_ptr() as *mut i8) };
         if sig_ptr.is_null() {
             return None;
         }
 
-        let sig = unsafe { CStr::from_ptr(sig_ptr) }.to_string_lossy().into_owned();
+        let sig = unsafe { CStr::from_ptr(sig_ptr) }
+            .to_string_lossy()
+            .into_owned();
         unsafe {
             sys::dogecoin_free(sig_ptr as *mut c_void);
         }
@@ -71,6 +74,10 @@ mod tests {
 
         let sig = Message::sign(wallet.private_key(), msg).expect("sign_message failed");
         assert!(Message::verify(&sig, msg, wallet.address()));
-        assert!(!Message::verify(&sig, "different message", wallet.address()));
+        assert!(!Message::verify(
+            &sig,
+            "different message",
+            wallet.address()
+        ));
     }
 }

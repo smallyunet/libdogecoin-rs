@@ -7,8 +7,8 @@
 //! - Mnemonic phrase generation (BIP39)
 //! - QR Code generation for addresses
 
-pub mod context;
 pub mod address;
+pub mod context;
 pub mod hdwallet;
 pub mod message;
 pub mod mnemonic;

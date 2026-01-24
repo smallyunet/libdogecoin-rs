@@ -24,7 +24,11 @@ impl DogeRpcClient {
     }
 
     /// Set HTTP Basic auth (typical for Dogecoin Core).
-    pub fn with_basic_auth(mut self, username: impl Into<String>, password: impl Into<String>) -> Self {
+    pub fn with_basic_auth(
+        mut self,
+        username: impl Into<String>,
+        password: impl Into<String>,
+    ) -> Self {
         self.auth = Some((username.into(), password.into()));
         self
     }
@@ -36,7 +40,11 @@ impl DogeRpcClient {
     }
 
     /// Generic JSON-RPC call.
-    pub fn call<T: DeserializeOwned>(&self, method: &str, params: serde_json::Value) -> Result<T, RpcError> {
+    pub fn call<T: DeserializeOwned>(
+        &self,
+        method: &str,
+        params: serde_json::Value,
+    ) -> Result<T, RpcError> {
         let req = JsonRpcRequest {
             jsonrpc: "1.0",
             id: "libdogecoin-rs",
@@ -66,7 +74,10 @@ impl DogeRpcClient {
             Err(ureq::Error::Status(code, r)) => {
                 // Try to extract a JSON error body for diagnostics.
                 let body: Result<serde_json::Value, _> = r.into_json();
-                Err(RpcError::HttpStatus { code, body: body.ok() })
+                Err(RpcError::HttpStatus {
+                    code,
+                    body: body.ok(),
+                })
             }
             Err(e) => Err(RpcError::Transport(e)),
         }
@@ -101,7 +112,12 @@ impl DogeRpcClient {
     }
 
     /// Convenience: compute balance from `listunspent` for one address.
-    pub fn utxo_balance(&self, address: &str, min_conf: u32, max_conf: u32) -> Result<f64, RpcError> {
+    pub fn utxo_balance(
+        &self,
+        address: &str,
+        min_conf: u32,
+        max_conf: u32,
+    ) -> Result<f64, RpcError> {
         let utxos = self.utxos_for_address(address, min_conf, max_conf)?;
         Ok(utxos.into_iter().map(|u| u.amount).sum())
     }
@@ -167,7 +183,10 @@ pub enum RpcError {
     Transport(ureq::Error),
 
     #[error("http status {code}")]
-    HttpStatus { code: u16, body: Option<serde_json::Value> },
+    HttpStatus {
+        code: u16,
+        body: Option<serde_json::Value>,
+    },
 
     #[error("failed to serialize request: {0}")]
     Serialize(serde_json::Error),
